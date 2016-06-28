@@ -1,7 +1,5 @@
 package model.data;
 
-import util.data.Ticket;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
