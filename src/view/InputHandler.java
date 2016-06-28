@@ -50,7 +50,7 @@ public class InputHandler {
     private void setAccountDetails(Authenticator authenticator) {
 
         // Requests the user to enter their username
-        System.out.print("Please enter your username: ");
+        System.out.print("\nPlease enter your username: ");
         authenticator.getUserAccount().setUsername(input.nextLine());
 
         // Requests the user to enter their password
@@ -113,6 +113,7 @@ public class InputHandler {
         } catch (InputMismatchException error) {
             // Clear input
             input.nextLine();
+            System.out.println("Your input was not recognised.");
         }
 
     }

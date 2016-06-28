@@ -59,8 +59,8 @@ public class Authenticator {
         return URI;
     }
 
-    private boolean connectError() {
-        System.out.println("\nThere has been an error with the API or your user details");
+    private boolean connectError(String message) {
+        System.out.println("\n" + message);
         return false;
     }
 
@@ -85,13 +85,13 @@ public class Authenticator {
                 setConnected(true);
                 return true;
             } else {
-                return connectError();
+                return connectError("The API is down or your user details were incorrect");
             }
 
         } catch (UnknownHostException e) {
-            return connectError();
+            return connectError("Your subdomain name was incorrect, please try again.");
         } catch (MalformedURLException e) {
-            return connectError();
+            return connectError("Your subdomain name was incorrect, please try again.");
         }
     }
 
