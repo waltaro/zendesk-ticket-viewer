@@ -3,6 +3,8 @@ package model.auth;
 import util.data.Account;
 import util.data.Subdomain;
 
+import model.data.TicketProcessor;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -66,10 +68,11 @@ public class Authenticator {
 
     public boolean connect(String encryptedString, String URI) throws IOException {
 
-        try {
-            int responseCode;
-            URL url = new URL(URI);
+        TicketProcessor ticketProcessor = new TicketProcessor();
+        int responseCode;
+        URL url = new URL(URI);
 
+        try {
             // Open secure connection
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
@@ -82,6 +85,7 @@ public class Authenticator {
 
             if(responseCode == 200) {
                 // TODO: retrieve tickets here
+                ticketProcessor.processData(connection.getInputStream());
                 setConnected(true);
                 return true;
             } else {
