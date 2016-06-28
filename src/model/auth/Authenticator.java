@@ -5,7 +5,9 @@ import util.data.Subdomain;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Base64;
 
 public class Authenticator {
@@ -57,30 +59,40 @@ public class Authenticator {
         return URI;
     }
 
+    private boolean connectError() {
+        System.out.println("\nThere has been an error with the API or your user details");
+        return false;
+    }
+
     public boolean connect(String encryptedString, String URI) throws IOException {
 
-        int responseCode;
-        URL url = new URL(URI);
+        try {
+            int responseCode;
+            URL url = new URL(URI);
 
-        // Open secure connection
-        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            // Open secure connection
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
-        // Set request headers
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("Authorization", "Basic " + encryptedString);
+            // Set request headers
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Authorization", "Basic " + encryptedString);
 
-        // Get the response from the server
-        responseCode = connection.getResponseCode();
+            // Get the response from the server
+            responseCode = connection.getResponseCode();
 
-        if(responseCode == 200) {
-            // TODO: retrieve tickets here
-            setConnected(true);
-            return true;
-        } else {
-            System.out.println("\nThere has been an error with the API or your user details");
-            return false;
+            if(responseCode == 200) {
+                // TODO: retrieve tickets here
+                setConnected(true);
+                return true;
+            } else {
+                return connectError();
+            }
+
+        } catch (UnknownHostException e) {
+            return connectError();
+        } catch (MalformedURLException e) {
+            return connectError();
         }
-
     }
 
     public void login() throws IOException {
