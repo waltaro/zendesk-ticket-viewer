@@ -23,7 +23,7 @@ public class Ticket {
     public int forum_topic_id;
     public int problem_id;
     public boolean has_incidents;
-    public Date due_at;
+    public String due_at;
     public String tags[];
     public Via via;
     public String custom_fields[];
@@ -33,8 +33,8 @@ public class Ticket {
     public int ticket_form_id;
     public int brand_id;
     public boolean allow_channelback;
-    public Date created_at;
-    public Date updated_at;
+    public String created_at;
+    public String updated_at;
 
     public Ticket(int requester_id) {
         this.requester_id = requester_id;

@@ -7,6 +7,7 @@ import model.data.TicketProcessor;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -66,13 +67,21 @@ public class Authenticator {
         return false;
     }
 
-    public boolean connect(String encryptedString, String URI) throws IOException {
+    public boolean connect(String encryptedString, String URI, TicketProcessor ticketProcessor) throws IOException {
 
-        TicketProcessor ticketProcessor = new TicketProcessor();
         int responseCode;
         URL url = new URL(URI);
 
+        // If the user has already connected and retrieved data, there is no need to do it again.
+        if(isConnected()) {
+            return true;
+        }
+
+        // Connect and retrive data
         try {
+            // Inform user that they are logging in
+            System.out.println("\nLogging in...");
+
             // Open secure connection
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
@@ -84,8 +93,9 @@ public class Authenticator {
             responseCode = connection.getResponseCode();
 
             if(responseCode == 200) {
-                // TODO: retrieve tickets here
-                ticketProcessor.processData(connection.getInputStream());
+                // TODO: refactor ticket processing and storage
+                ticketProcessor.setDataStream(connection.getInputStream());
+
                 setConnected(true);
                 return true;
             } else {
@@ -99,7 +109,7 @@ public class Authenticator {
         }
     }
 
-    public void login() throws IOException {
+    public void login(TicketProcessor ticketProcessor) throws IOException {
 
         // Encrypt user account details in Base64 -- used for authentication
         String encryptedString = encryptUserDetails(userAccount.getUsername(), userAccount.getPassword());
@@ -108,7 +118,7 @@ public class Authenticator {
         String zendeskURL = getZendeskURLFromSubdomain(subdomain.getDomain());
 
         // Connect to the Zendesk API and retrieve the tickets
-        connect(encryptedString, zendeskURL);
+        connect(encryptedString, zendeskURL, ticketProcessor);
 
     }
 

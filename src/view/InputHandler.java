@@ -1,6 +1,7 @@
 package view;
 
 import model.auth.Authenticator;
+import model.data.TicketProcessor;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -50,7 +51,7 @@ public class InputHandler {
     private void setAccountDetails(Authenticator authenticator) {
 
         // Requests the user to enter their username
-        System.out.print("\nPlease enter your username: ");
+        System.out.print("\nPlease enter your email address: ");
         authenticator.getUserAccount().setUsername(input.nextLine());
 
         // Requests the user to enter their password
@@ -75,7 +76,6 @@ public class InputHandler {
 
     }
 
-    // TODO: should add error checking here.. but I'm trusting the user.. :P
     public void getUserDetails(Authenticator authenticator) {
 
         if(!authenticator.isConnected()) {
@@ -88,18 +88,24 @@ public class InputHandler {
 
     }
 
-    public void getMenuChoice(Authenticator authenticator) throws IOException {
+    public void getMenuChoice(Authenticator authenticator, TicketProcessor ticketProcessor) throws IOException {
+
+        TicketViewer ticketViewer = new TicketViewer();
 
         try{
             switch (input.nextInt()) {
                 case 1:
                     getUserDetails(authenticator);
-                    authenticator.login();
+                    authenticator.login(ticketProcessor);
+                    ticketProcessor.processData();
+                    ticketViewer.viewAllTickets();
                     break;
 
                 case 2:
                     getUserDetails(authenticator);
-                    authenticator.login();
+                    authenticator.login(ticketProcessor);
+                    ticketProcessor.processData();
+                    ticketViewer.viewSingleTicket(0);
                     break;
 
                 case 3:

@@ -1,5 +1,8 @@
 package model.data;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,30 +10,82 @@ import java.io.InputStreamReader;
 
 public class TicketProcessor {
 
-    private String getTickets(InputStream data) throws IOException {
+    // Used for processing
+    private InputStream dataStream;
+
+    public void setTicketData(String ticketData) {
+        this.ticketData = ticketData;
+    }
+
+    private String ticketData;
+
+    // Used for checking
+    private boolean isDataSuccessfullyRetreived = false;
+    private boolean isDataProcessed = false;
+
+    private void getTickets() throws IOException {
+
+        // If data has been retrieved, no need to retrieve it again
+        if(isDataSuccessfullyRetreived) {
+            return;
+        }
+
+        // Inform user that we are retrieving the data
+        System.out.println("Retrieving tickets...\n");
 
         // Get ticket data stream from the Zendesk servers
-        BufferedReader ticketDataStream = new BufferedReader(new InputStreamReader(data));
+        BufferedReader ticketDataStream = new BufferedReader(new InputStreamReader(this.dataStream));
 
         String input;
-        StringBuffer ticketData = new StringBuffer();
+        StringBuffer data = new StringBuffer();
 
         // Get all ticket data from the servers
         while((input = ticketDataStream.readLine()) != null) {
-            ticketData.append(input);
+            data.append(input);
         }
 
         // Close string buffer
         ticketDataStream.close();
 
-        return ticketData.toString();
+        setTicketData(data.toString());
+        setIsDataSuccessfullyRetreived(true);
     }
 
-    public void processData(InputStream data) throws IOException {
+    public void processData() throws IOException {
+
+        // If the data has already been processed, no need to do it again
+        if(isDataProcessed) {
+            return;
+        }
 
         // Get JSON from the server
-        String JSON = getTickets(data);
+        getTickets();
 
-        // TODO: save data into respective data structure
+        // Create new JSON
+        JSONObject receivedData = new JSONObject(this.ticketData);
+
+        // Get tickets from the received data
+        JSONArray tickets = receivedData.getJSONArray("tickets");
+
+        // TODO: actual processing instead of printing out the IDs..
+        for(int i = 0; i < tickets.length(); i++) {
+            JSONObject ticket = tickets.getJSONObject(i);
+            int id = ticket.getInt("id");
+            System.out.println(id);
+        }
+
+        setDataProcessed(true);
+    }
+
+    public void setDataStream(InputStream dataStream) {
+        this.dataStream = dataStream;
+    }
+
+    public void setIsDataSuccessfullyRetreived(boolean dataSuccessfullyRetreived) {
+        this.isDataSuccessfullyRetreived = dataSuccessfullyRetreived;
+    }
+
+    public void setDataProcessed(boolean dataProcessed) {
+        isDataProcessed = dataProcessed;
     }
 }

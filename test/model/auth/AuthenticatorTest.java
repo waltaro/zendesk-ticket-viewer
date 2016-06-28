@@ -1,5 +1,6 @@
 package model.auth;
 
+import model.data.TicketProcessor;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import static org.junit.Assert.*;
 public class AuthenticatorTest {
 
     Authenticator auth = new Authenticator();
+    TicketProcessor ticketProcessor = new TicketProcessor();
 
     @Test
     public void testEncryptUserDetails() {
@@ -22,7 +24,7 @@ public class AuthenticatorTest {
 
     @Test
     public void testConnect() throws IOException {
-        assertEquals(false, auth.connect("notgoingtwork", auth.getZendeskURLFromSubdomain("subdomain")));
+        assertEquals(false, auth.connect("notgoingtwork", auth.getZendeskURLFromSubdomain("subdomain"), ticketProcessor));
     }
 
 }
