@@ -3,6 +3,7 @@ package view;
 import model.auth.Authenticator;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -87,27 +88,32 @@ public class InputHandler {
 
     }
 
-    // TODO: catch exception on non-int input
     public void getMenuChoice(Authenticator authenticator) throws IOException {
 
-        switch (input.nextInt()) {
-            case 1:
-                getUserDetails(authenticator);
-                authenticator.login();
-                break;
+        try{
+            switch (input.nextInt()) {
+                case 1:
+                    getUserDetails(authenticator);
+                    authenticator.login();
+                    break;
 
-            case 2:
-                getUserDetails(authenticator);
-                authenticator.login();
-                break;
+                case 2:
+                    getUserDetails(authenticator);
+                    authenticator.login();
+                    break;
 
-            case 3:
-                quit();
-                break;
+                case 3:
+                    quit();
+                    break;
 
-            default:
-                printError();
-                break;
+                default:
+                    printError();
+                    break;
+            }
+        } catch (InputMismatchException error) {
+            // Clear input
+            input.nextLine();
         }
+
     }
 }
