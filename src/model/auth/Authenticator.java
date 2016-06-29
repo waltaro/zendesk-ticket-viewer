@@ -27,20 +27,24 @@ public class Authenticator {
     public Authenticator() {
     }
 
+    public void setAccountUsername(String username) {
+        this.userAccount.setUsername(username);
+    }
+
+    public void setAccountPassword(String password) {
+        this.userAccount.setPassword(password);
+    }
+
+    public void setUserSubdomainName(String subdomainName) {
+        this.subdomain.setDomain(subdomainName);
+    }
+
     public Account getUserAccount() {
         return userAccount;
     }
 
     public void setUserAccount(Account userAccount) {
         this.userAccount = userAccount;
-    }
-
-    public Subdomain getSubdomain() {
-        return subdomain;
-    }
-
-    public void setSubdomain(Subdomain subdomain) {
-        this.subdomain = subdomain;
     }
 
     public boolean isConnected() {
@@ -60,14 +64,7 @@ public class Authenticator {
 
     public String getZendeskURLFromSubdomain(String subdomain) {
 
-        String URI = "https://" + subdomain + ".zendesk.com/api/v2/tickets.json";
-
-        return URI;
-    }
-
-    private boolean connectError(String message) {
-        System.out.println("\n" + message);
-        return false;
+        return new String("https://" + subdomain + ".zendesk.com/api/v2/tickets.json");
     }
 
     public boolean connect(String encryptedString, String URI, TicketProcessor ticketProcessor) throws IOException {
@@ -80,8 +77,11 @@ public class Authenticator {
             return true;
         }
 
-        // Connect and retrive ticket
+        // Connect and retrieve ticket
         try {
+            // Inform the user that they are logging in
+            message.printLoginMessage();
+
             // Open secure connection
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
@@ -110,9 +110,6 @@ public class Authenticator {
     }
 
     public void login(TicketProcessor ticketProcessor) throws IOException {
-
-        // Inform the user that they are logging in
-        message.printLoginMessage();
 
         // Encrypt user account details in Base64 -- used for authentication
         String encryptedString = encryptUserDetails(userAccount.getUsername(), userAccount.getPassword());

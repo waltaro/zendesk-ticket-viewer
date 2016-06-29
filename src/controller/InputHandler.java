@@ -41,11 +41,11 @@ public class InputHandler {
 
         // Requests the user to enter their username
         message.printEnterEmailAddressMessage();
-        authenticator.getUserAccount().setUsername(input.nextLine());
+        authenticator.setAccountUsername(input.nextLine());
 
         // Requests the user to enter their password
         message.printEnterPasswordMessage();
-        authenticator.getUserAccount().setPassword(input.nextLine());
+        authenticator.setAccountPassword(input.nextLine());
 
         // Sets the user account linked to the Zendesk subdomain
         authenticator.setUserAccount(authenticator.getUserAccount());
@@ -61,7 +61,7 @@ public class InputHandler {
         input.nextLine();
 
         // Sets the domain name to be used for authentication
-        authenticator.getSubdomain().setDomain(input.nextLine());
+        authenticator.setUserSubdomainName(input.nextLine());
 
     }
 
@@ -77,6 +77,12 @@ public class InputHandler {
 
     }
 
+    private void startConnectionProcess(Authenticator authenticator, TicketProcessor ticketProcessor) throws IOException {
+        getUserDetails(authenticator);
+        authenticator.login(ticketProcessor);
+        ticketProcessor.processData();
+    }
+
     public void getMenuChoice(Authenticator authenticator, TicketProcessor ticketProcessor) throws IOException {
 
         TicketViewer ticketViewer = new TicketViewer();
@@ -84,16 +90,12 @@ public class InputHandler {
         try{
             switch (input.nextInt()) {
                 case 1:
-                    getUserDetails(authenticator);
-                    authenticator.login(ticketProcessor);
-                    ticketProcessor.processData();
+                    startConnectionProcess(authenticator, ticketProcessor);
                     ticketViewer.viewAllTickets();
                     break;
 
                 case 2:
-                    getUserDetails(authenticator);
-                    authenticator.login(ticketProcessor);
-                    ticketProcessor.processData();
+                    startConnectionProcess(authenticator, ticketProcessor);
                     ticketViewer.viewSingleTicket(0);
                     break;
 

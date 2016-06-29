@@ -1,19 +1,10 @@
 package util.data.user;
 
 public class Subdomain {
-    private Account account;
     private String domain;
 
     public Subdomain() {
 
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public String getDomain() {
