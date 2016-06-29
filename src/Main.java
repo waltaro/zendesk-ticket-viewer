@@ -1,8 +1,7 @@
 import model.auth.Authenticator;
-import model.data.TicketProcessor;
-import view.InputHandler;
-
-import java.io.IOException;
+import model.ticket.TicketProcessor;
+import controller.InputHandler;
+import view.Messages;
 
 public class Main {
 
@@ -10,17 +9,19 @@ public class Main {
 
         // Used to authenticate/talk to the Zendesk API for ticket retrieval
         Authenticator authenticator = new Authenticator();
-        // Used to process the ticket data
+        // Used to process the ticket ticket
         TicketProcessor ticketProcessor = new TicketProcessor();
         // Used to handle user input
         InputHandler input = new InputHandler();
+        // Used to update the view
+        Messages message = new Messages();
 
         // Welcome the user to the program
-        input.printWelcomeMessage();
+        message.printWelcomeMessage();
 
         // Begin of menu loop
         while(!input.isQuit()) {
-            input.printMenu();
+            message.printMenu();
             input.getMenuChoice(authenticator, ticketProcessor);
         }
     }

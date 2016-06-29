@@ -1,4 +1,4 @@
-package util.data;
+package util.data.user;
 
 public class Subdomain {
     private Account account;

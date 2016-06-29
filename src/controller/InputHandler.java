@@ -1,7 +1,9 @@
-package view;
+package controller;
 
 import model.auth.Authenticator;
-import model.data.TicketProcessor;
+import model.ticket.TicketProcessor;
+import view.Messages;
+import model.ticket.TicketViewer;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -15,6 +17,9 @@ public class InputHandler {
     // Used for menu loop
     private boolean quit = false;
 
+    // Used to update the view
+    private Messages message = new Messages();
+
     public InputHandler() {
 
     }
@@ -27,35 +32,19 @@ public class InputHandler {
         this.quit = quit;
     }
 
-    public void printWelcomeMessage() {
-        System.out.println("Welcome to the Zendesk Ticket Viewer!");
-    }
-
-    public void printMenu() {
-        System.out.println("\nPlease select from the following choices below: \n");
-        System.out.println("\t1 - View all tickets");
-        System.out.println("\t2 - View single ticket");
-        System.out.println("\t3 - Quit\n");
-        System.out.print("Input: ");
-    }
-
-    private void printError() {
-        System.out.println("Please try again.");
-    }
-
     private void quit() {
-        System.out.println("\nThank you for using the Zendesk Ticket Viewer");
+        message.printGoodbyeMessage();
         setQuit(true);
     }
 
     private void setAccountDetails(Authenticator authenticator) {
 
         // Requests the user to enter their username
-        System.out.print("\nPlease enter your email address: ");
+        message.printEnterEmailAddressMessage();
         authenticator.getUserAccount().setUsername(input.nextLine());
 
         // Requests the user to enter their password
-        System.out.print("Please enter your password: ");
+        message.printEnterPasswordMessage();
         authenticator.getUserAccount().setPassword(input.nextLine());
 
         // Sets the user account linked to the Zendesk subdomain
@@ -66,7 +55,7 @@ public class InputHandler {
     private void setDomainDetails(Authenticator authenticator) {
 
         // Requests the user to enter their domain name on Zendesk
-        System.out.print("\nPlease enter your subdomain name on Zendesk (https://subdomain.zendesk.com/): ");
+        message.printEnterSubdomainMessage();
 
         // Clear buffer
         input.nextLine();
@@ -113,13 +102,13 @@ public class InputHandler {
                     break;
 
                 default:
-                    printError();
+                    message.printInputError();
                     break;
             }
         } catch (InputMismatchException error) {
             // Clear input
             input.nextLine();
-            System.out.println("Your input was not recognised.");
+            message.printInputError();
         }
 
     }

@@ -1,4 +1,4 @@
-package view;
+package model.ticket;
 
 public class TicketViewer {
 

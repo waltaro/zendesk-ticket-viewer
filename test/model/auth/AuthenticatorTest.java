@@ -1,6 +1,6 @@
 package model.auth;
 
-import model.data.TicketProcessor;
+import model.ticket.TicketProcessor;
 import org.junit.Test;
 
 import java.io.IOException;

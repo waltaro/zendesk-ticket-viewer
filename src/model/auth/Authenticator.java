@@ -1,13 +1,13 @@
 package model.auth;
 
-import util.data.Account;
-import util.data.Subdomain;
+import util.data.user.Account;
+import util.data.user.Subdomain;
 
-import model.data.TicketProcessor;
+import model.ticket.TicketProcessor;
+import view.Messages;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -19,6 +19,9 @@ public class Authenticator {
     private Account userAccount = new Account();
     private Subdomain subdomain = new Subdomain();
     private boolean connected;
+
+    // Used to update the view
+    private Messages message = new Messages();
 
     // Empty constructor
     public Authenticator() {
@@ -72,16 +75,13 @@ public class Authenticator {
         int responseCode;
         URL url = new URL(URI);
 
-        // If the user has already connected and retrieved data, there is no need to do it again.
+        // If the user has already connected and retrieved ticket, there is no need to do it again.
         if(isConnected()) {
             return true;
         }
 
-        // Connect and retrive data
+        // Connect and retrive ticket
         try {
-            // Inform user that they are logging in
-            System.out.println("\nLogging in...");
-
             // Open secure connection
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
@@ -99,17 +99,20 @@ public class Authenticator {
                 setConnected(true);
                 return true;
             } else {
-                return connectError("The API is down or your user details were incorrect");
+                return message.printConnectError();
             }
 
         } catch (UnknownHostException e) {
-            return connectError("Your subdomain name was incorrect, please try again.");
+            return message.printIncorrectSubdomainMessage();
         } catch (MalformedURLException e) {
-            return connectError("Your subdomain name was incorrect, please try again.");
+            return message.printIncorrectSubdomainMessage();
         }
     }
 
     public void login(TicketProcessor ticketProcessor) throws IOException {
+
+        // Inform the user that they are logging in
+        message.printLoginMessage();
 
         // Encrypt user account details in Base64 -- used for authentication
         String encryptedString = encryptUserDetails(userAccount.getUsername(), userAccount.getPassword());

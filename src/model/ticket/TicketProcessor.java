@@ -1,4 +1,4 @@
-package model.data;
+package model.ticket;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,21 +25,21 @@ public class TicketProcessor {
 
     private void getTickets() throws IOException {
 
-        // If data has been retrieved, no need to retrieve it again
+        // If ticket has been retrieved, no need to retrieve it again
         if(isDataSuccessfullyRetreived) {
             return;
         }
 
-        // Inform user that we are retrieving the data
+        // Inform user that we are retrieving the ticket
         System.out.println("Retrieving tickets...\n");
 
-        // Get ticket data stream from the Zendesk servers
+        // Get ticket ticket stream from the Zendesk servers
         BufferedReader ticketDataStream = new BufferedReader(new InputStreamReader(this.dataStream));
 
         String input;
         StringBuffer data = new StringBuffer();
 
-        // Get all ticket data from the servers
+        // Get all ticket ticket from the servers
         while((input = ticketDataStream.readLine()) != null) {
             data.append(input);
         }
@@ -53,7 +53,7 @@ public class TicketProcessor {
 
     public void processData() throws IOException {
 
-        // If the data has already been processed, no need to do it again
+        // If the ticket has already been processed, no need to do it again
         if(isDataProcessed) {
             return;
         }
@@ -64,7 +64,7 @@ public class TicketProcessor {
         // Create new JSON
         JSONObject receivedData = new JSONObject(this.ticketData);
 
-        // Get tickets from the received data
+        // Get tickets from the received ticket
         JSONArray tickets = receivedData.getJSONArray("tickets");
 
         // TODO: actual processing instead of printing out the IDs..
