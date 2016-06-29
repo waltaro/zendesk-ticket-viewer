@@ -50,4 +50,12 @@ public class Messages {
     public void printLoginMessage() {
         System.out.println("\nLogging in...");
     }
+
+    public void printSavingTicketDataMessage() {
+        System.out.println("Saving ticket data...");
+    }
+
+    public void printRetrievingTicketDataMessage() {
+        System.out.println("Retrieving tickets...");
+    }
 }

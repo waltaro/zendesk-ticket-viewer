@@ -3,6 +3,7 @@ package model.ticket;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import util.data.ticket.Ticket;
+import view.Messages;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +27,8 @@ public class TicketProcessor {
     private boolean isDataSuccessfullyRetreived = false;
     private boolean isDataProcessed = false;
 
+    private Messages messages = new Messages();
+
     private void getTicketData() throws IOException {
 
         // If ticket has been retrieved, no need to retrieve it again
@@ -34,7 +37,7 @@ public class TicketProcessor {
         }
 
         // Inform user that we are retrieving the ticket
-        System.out.println("Retrieving tickets...\n");
+        messages.printRetrievingTicketDataMessage();
 
         // Get ticket ticket stream from the Zendesk servers
         BufferedReader ticketDataStream = new BufferedReader(new InputStreamReader(this.dataStream));
@@ -109,14 +112,16 @@ public class TicketProcessor {
         ArrayList custom_fields = getJSONArrayStringData(ticketData, "tags");
         // todo satisfaction_rating
         ArrayList sharing_agreement_ids = getJSONArrayIntData(ticketData, "sharing_agreement_ids");
+        /* Only for closed tickets
         ArrayList followup_ids = getJSONArrayIntData(ticketData, "followup_ids");
+        */
         int ticket_form_id = ticketData.optInt("ticket_form_id");
         int brand_id = ticketData.optInt("brand_id");
         boolean allow_channelback = ticketData.optBoolean("allow_channelback");
         String created_at = ticketData.optString("created_at");
         String updated_at = ticketData.optString("updated_at");
 
-        // Popu
+        // Populates the ticket
         ticket.setId(id);
         ticket.setUrl(url);
         ticket.setExternal_id(external_id);
@@ -142,7 +147,7 @@ public class TicketProcessor {
         ticket.setCustom_fields(custom_fields);
         //ticket.setSatisfaction_rating(sat);
         ticket.setSharing_agreement_ids(sharing_agreement_ids);
-        ticket.setFollowup_ids(followup_ids);
+        //ticket.setFollowup_ids(followup_ids);
         ticket.setTicket_form_id(ticket_form_id);
         ticket.setBrand_id(brand_id);
         ticket.setAllow_channelback(allow_channelback);
@@ -154,6 +159,8 @@ public class TicketProcessor {
 
 
     private void saveTicketData() {
+        // Inform the user that we are saving the ticket data
+        messages.printSavingTicketDataMessage();
         // Create new JSON
         JSONObject receivedData = new JSONObject(this.ticketData);
 
