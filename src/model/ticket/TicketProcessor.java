@@ -37,26 +37,33 @@ public class TicketProcessor
             return;
         }
 
-        // Inform user that we are retrieving the ticket
-        messages.printRetrievingTicketDataMessage();
-
-        // Get ticket ticket stream from the Zendesk servers
-        BufferedReader ticketDataStream = new BufferedReader(new InputStreamReader(this.dataStream));
-
-        String input;
-        StringBuilder data = new StringBuilder();
-
-        // Get all ticket ticket from the servers
-        while ((input = ticketDataStream.readLine()) != null)
+        try
         {
-            data.append(input);
+            // Inform user that we are retrieving the ticket
+            messages.printRetrievingTicketDataMessage();
+
+            // Get ticket ticket stream from the Zendesk servers
+            BufferedReader ticketDataStream = new BufferedReader(new InputStreamReader(this.dataStream));
+
+            String input;
+            StringBuilder data = new StringBuilder();
+
+            // Get all ticket ticket from the servers
+            while ((input = ticketDataStream.readLine()) != null)
+            {
+                data.append(input);
+            }
+
+            // Close string buffer
+            ticketDataStream.close();
+
+            setTicketData(data.toString());
+            setDataProcessed(true);
         }
+        catch(NullPointerException e)
+        {
 
-        // Close string buffer
-        ticketDataStream.close();
-
-        setTicketData(data.toString());
-        setDataProcessed(true);
+        }
     }
 
     private ArrayList getJSONArrayStringData(JSONObject data, String key)
@@ -174,7 +181,6 @@ public class TicketProcessor
 
     private void saveTicketData(Authenticator authenticator)
     {
-
         // Create new JSON
         JSONObject receivedData = new JSONObject(this.ticketData);
 
@@ -203,6 +209,10 @@ public class TicketProcessor
             // If no tickets have be founds
             //messages.printNoTicketsFound();
         }
+        catch (NullPointerException e)
+        {
+
+        }
 
         // Checks to see if there is another page of tickets
         try
@@ -226,6 +236,10 @@ public class TicketProcessor
         catch (JSONException e)
         {
             setDataProcessed(true);
+        }
+        catch (NullPointerException e)
+        {
+
         }
         catch (IOException e)
         {

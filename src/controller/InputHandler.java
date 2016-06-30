@@ -85,9 +85,15 @@ public class InputHandler
 
     private void startConnectionProcess(Authenticator authenticator, TicketProcessor ticketProcessor) throws IOException
     {
+        // Request user to enter their details
         getUserDetails(authenticator);
-        authenticator.login(ticketProcessor);
-        ticketProcessor.processData(authenticator);
+
+        // If login was successful, process the data received
+        if(authenticator.login(ticketProcessor))
+        {
+            // Process data received
+            ticketProcessor.processData(authenticator);
+        }
     }
 
     public void getMenuChoice(Authenticator authenticator, TicketProcessor ticketProcessor) throws IOException

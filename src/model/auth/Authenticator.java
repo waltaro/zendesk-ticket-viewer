@@ -81,13 +81,12 @@ public class Authenticator
 
     public boolean connect(String encryptedString, String URI, TicketProcessor ticketProcessor) throws IOException
     {
-
-        int responseCode;
-        URL url = new URL(URI);
-
         // Connect and retrieve ticket
         try
         {
+            int responseCode;
+            URL url = new URL(URI);
+
             // Open secure connection
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
@@ -122,12 +121,12 @@ public class Authenticator
         }
     }
 
-    public void login(TicketProcessor ticketProcessor) throws IOException
+    public boolean login(TicketProcessor ticketProcessor) throws IOException
     {
         // If the user has already connected and retrieved ticket, there is no need to do it again.
         if (isConnected())
         {
-            return;
+            return false;
         }
 
         // Inform the user that they are logging in
@@ -141,7 +140,7 @@ public class Authenticator
         String zendeskURL = getZendeskURLFromSubdomain(subdomain.getDomain());
 
         // Connect to the Zendesk API and retrieve the tickets
-        connect(encryptedString, zendeskURL, ticketProcessor);
+        return connect(encryptedString, zendeskURL, ticketProcessor);
 
     }
 
