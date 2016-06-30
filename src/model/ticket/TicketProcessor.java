@@ -22,7 +22,6 @@ public class TicketProcessor
     private String ticketData;
     private Hashtable<Integer, Ticket> tickets = new Hashtable<>();
     // Used for checking
-    private boolean isDataSuccessfullyRetreived = false;
     private boolean isDataProcessed = false;
     private Messages messages = new Messages();
 
@@ -33,9 +32,7 @@ public class TicketProcessor
 
     private void getTicketData() throws IOException
     {
-
-        // If ticket has been retrieved, no need to retrieve it again
-        if (isDataSuccessfullyRetreived)
+        if(isDataProcessed)
         {
             return;
         }
@@ -59,7 +56,7 @@ public class TicketProcessor
         ticketDataStream.close();
 
         setTicketData(data.toString());
-        setIsDataSuccessfullyRetreived(true);
+        setDataProcessed(true);
     }
 
     private ArrayList getJSONArrayStringData(JSONObject data, String key)
@@ -206,10 +203,6 @@ public class TicketProcessor
             // If no tickets have be founds
             //messages.printNoTicketsFound();
         }
-        finally
-        {
-            System.out.println("Total tickets: " + tickets.size());
-        }
 
         // Checks to see if there is another page of tickets
         try
@@ -220,8 +213,6 @@ public class TicketProcessor
             // If there exists a next page of tickets
             if(!nextPageURL.isEmpty()) {
                 // Set all checks to false so we can process data again
-                authenticator.setConnected(false);
-                setIsDataSuccessfullyRetreived(false);
                 setDataProcessed(false);
 
                 // Connect to the Zendesk API to retrieve the next page of tickets
@@ -235,9 +226,6 @@ public class TicketProcessor
         catch (JSONException e)
         {
             setDataProcessed(true);
-            setIsDataSuccessfullyRetreived(true);
-            authenticator.setConnected(true);
-            System.out.println("Total tickets: " + tickets.size());
         }
         catch (IOException e)
         {
@@ -247,7 +235,6 @@ public class TicketProcessor
 
     public void processData(Authenticator authenticator) throws IOException
     {
-
         // If the ticket has already been processed, no need to do it again
         if (isDataProcessed)
         {
@@ -264,11 +251,6 @@ public class TicketProcessor
     public void setDataStream(InputStream dataStream)
     {
         this.dataStream = dataStream;
-    }
-
-    public void setIsDataSuccessfullyRetreived(boolean dataSuccessfullyRetreived)
-    {
-        this.isDataSuccessfullyRetreived = dataSuccessfullyRetreived;
     }
 
     public void setDataProcessed(boolean dataProcessed)

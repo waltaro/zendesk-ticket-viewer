@@ -85,18 +85,9 @@ public class Authenticator
         int responseCode;
         URL url = new URL(URI);
 
-        // If the user has already connected and retrieved ticket, there is no need to do it again.
-        if (isConnected())
-        {
-            return true;
-        }
-
         // Connect and retrieve ticket
         try
         {
-            // Inform the user that they are logging in
-            message.printLoginMessage();
-
             // Open secure connection
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
@@ -133,6 +124,14 @@ public class Authenticator
 
     public void login(TicketProcessor ticketProcessor) throws IOException
     {
+        // If the user has already connected and retrieved ticket, there is no need to do it again.
+        if (isConnected())
+        {
+            return;
+        }
+
+        // Inform the user that they are logging in
+        message.printLoginMessage();
 
         // Encrypt user account details in Base64 -- used for authentication
         String encryptedString = encryptUserDetails(userAccount.getUsername(), userAccount.getPassword());
