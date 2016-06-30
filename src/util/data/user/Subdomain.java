@@ -1,17 +1,21 @@
 package util.data.user;
 
-public class Subdomain {
+public class Subdomain
+{
     private String domain;
 
-    public Subdomain() {
+    public Subdomain()
+    {
 
     }
 
-    public String getDomain() {
+    public String getDomain()
+    {
         return domain;
     }
 
-    public void setDomain(String domain) {
+    public void setDomain(String domain)
+    {
         this.domain = domain;
     }
 }

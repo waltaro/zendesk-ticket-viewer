@@ -2,7 +2,8 @@ package util.data.ticket;
 
 import java.util.ArrayList;
 
-public class Ticket {
+public class Ticket
+{
 
     private int id;
     private String url;
@@ -36,400 +37,496 @@ public class Ticket {
     private String created_at;
     private String updated_at;
 
-    public Ticket(int requester_id) {
+    public Ticket(int requester_id)
+    {
         this.requester_id = requester_id;
     }
 
-    public Ticket() {
+    public Ticket()
+    {
 
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public String getUrl() {
+    public String getUrl()
+    {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(String url)
+    {
         this.url = url;
     }
 
-    public String getExternal_id() {
+    public String getExternal_id()
+    {
         return external_id;
     }
 
-    public void setExternal_id(String external_id) {
+    public void setExternal_id(String external_id)
+    {
         this.external_id = external_id;
     }
 
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(String type)
+    {
         this.type = type;
     }
 
-    public String getSubject() {
+    public String getSubject()
+    {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(String subject)
+    {
         this.subject = subject;
     }
 
-    public String getRaw_subject() {
+    public String getRaw_subject()
+    {
         return raw_subject;
     }
 
-    public void setRaw_subject(String raw_subject) {
+    public void setRaw_subject(String raw_subject)
+    {
         this.raw_subject = raw_subject;
     }
 
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(String description)
+    {
         this.description = description;
     }
 
-    public String getPriority() {
+    public String getPriority()
+    {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(String priority)
+    {
         this.priority = priority;
     }
 
-    public String getStatus() {
+    public String getStatus()
+    {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(String status)
+    {
         this.status = status;
     }
 
-    public String getRecipient() {
+    public String getRecipient()
+    {
         return recipient;
     }
 
-    public void setRecipient(String recipient) {
+    public void setRecipient(String recipient)
+    {
         this.recipient = recipient;
     }
 
-    public int getRequester_id() {
+    public int getRequester_id()
+    {
         return requester_id;
     }
 
-    public void setRequester_id(int requester_id) {
+    public void setRequester_id(int requester_id)
+    {
         this.requester_id = requester_id;
     }
 
-    public int getSubmitter_id() {
+    public int getSubmitter_id()
+    {
         return submitter_id;
     }
 
-    public void setSubmitter_id(int submitter_id) {
+    public void setSubmitter_id(int submitter_id)
+    {
         this.submitter_id = submitter_id;
     }
 
-    public int getAssignee_id() {
+    public int getAssignee_id()
+    {
         return assignee_id;
     }
 
-    public void setAssignee_id(int assignee_id) {
+    public void setAssignee_id(int assignee_id)
+    {
         this.assignee_id = assignee_id;
     }
 
-    public int getOrganization_id() {
+    public int getOrganization_id()
+    {
         return organization_id;
     }
 
-    public void setOrganization_id(int organization_id) {
+    public void setOrganization_id(int organization_id)
+    {
         this.organization_id = organization_id;
     }
 
-    public int getGroup_id() {
+    public int getGroup_id()
+    {
         return group_id;
     }
 
-    public void setGroup_id(int group_id) {
+    public void setGroup_id(int group_id)
+    {
         this.group_id = group_id;
     }
 
-    public ArrayList<Integer> getCollaborator_id() {
+    public ArrayList<Integer> getCollaborator_id()
+    {
         return collaborator_id;
     }
 
-    public void setCollaborator_id(ArrayList<Integer> collaborator_id) {
+    public void setCollaborator_id(ArrayList<Integer> collaborator_id)
+    {
         this.collaborator_id = collaborator_id;
     }
 
-    public int getForum_topic_id() {
+    public int getForum_topic_id()
+    {
         return forum_topic_id;
     }
 
-    public void setForum_topic_id(int forum_topic_id) {
+    public void setForum_topic_id(int forum_topic_id)
+    {
         this.forum_topic_id = forum_topic_id;
     }
 
-    public int getProblem_id() {
+    public int getProblem_id()
+    {
         return problem_id;
     }
 
-    public void setProblem_id(int problem_id) {
+    public void setProblem_id(int problem_id)
+    {
         this.problem_id = problem_id;
     }
 
-    public boolean isHas_incidents() {
+    public boolean isHas_incidents()
+    {
         return has_incidents;
     }
 
-    public void setHas_incidents(boolean has_incidents) {
+    public void setHas_incidents(boolean has_incidents)
+    {
         this.has_incidents = has_incidents;
     }
 
-    public String getDue_at() {
+    public String getDue_at()
+    {
         return due_at;
     }
 
-    public void setDue_at(String due_at) {
+    public void setDue_at(String due_at)
+    {
         this.due_at = due_at;
     }
 
-    public ArrayList<String> getTags() {
+    public ArrayList<String> getTags()
+    {
         return tags;
     }
 
-    public void setTags(ArrayList<String> tags) {
+    public void setTags(ArrayList<String> tags)
+    {
         this.tags = tags;
     }
 
-    public Via getVia() {
+    public Via getVia()
+    {
         return via;
     }
 
-    public void setVia(Via via) {
+    public void setVia(Via via)
+    {
         this.via = via;
     }
 
-    public ArrayList<String> getCustom_fields() {
+    public ArrayList<String> getCustom_fields()
+    {
         return custom_fields;
     }
 
-    public void setCustom_fields(ArrayList<String> custom_fields) {
+    public void setCustom_fields(ArrayList<String> custom_fields)
+    {
         this.custom_fields = custom_fields;
     }
 
-    public SatisfactionRating getSatisfaction_rating() {
+    public SatisfactionRating getSatisfaction_rating()
+    {
         return satisfaction_rating;
     }
 
-    public void setSatisfaction_rating(SatisfactionRating satisfaction_rating) {
+    public void setSatisfaction_rating(SatisfactionRating satisfaction_rating)
+    {
         this.satisfaction_rating = satisfaction_rating;
     }
 
-    public ArrayList<Integer> getSharing_agreement_ids() {
+    public ArrayList<Integer> getSharing_agreement_ids()
+    {
         return sharing_agreement_ids;
     }
 
-    public void setSharing_agreement_ids(ArrayList sharing_agreement_ids) {
+    public void setSharing_agreement_ids(ArrayList sharing_agreement_ids)
+    {
         this.sharing_agreement_ids = sharing_agreement_ids;
     }
 
-    public ArrayList<Integer> getFollowup_ids() {
+    public ArrayList<Integer> getFollowup_ids()
+    {
         return followup_ids;
     }
 
-    public void setFollowup_ids(ArrayList<Integer> followup_ids) {
+    public void setFollowup_ids(ArrayList<Integer> followup_ids)
+    {
         this.followup_ids = followup_ids;
     }
 
-    public int getTicket_form_id() {
+    public int getTicket_form_id()
+    {
         return ticket_form_id;
     }
 
-    public void setTicket_form_id(int ticket_form_id) {
+    public void setTicket_form_id(int ticket_form_id)
+    {
         this.ticket_form_id = ticket_form_id;
     }
 
-    public int getBrand_id() {
+    public int getBrand_id()
+    {
         return brand_id;
     }
 
-    public void setBrand_id(int brand_id) {
+    public void setBrand_id(int brand_id)
+    {
         this.brand_id = brand_id;
     }
 
-    public boolean isAllow_channelback() {
+    public boolean isAllow_channelback()
+    {
         return allow_channelback;
     }
 
-    public void setAllow_channelback(boolean allow_channelback) {
+    public void setAllow_channelback(boolean allow_channelback)
+    {
         this.allow_channelback = allow_channelback;
     }
 
-    public String getCreated_at() {
+    public String getCreated_at()
+    {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(String created_at)
+    {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public String getUpdated_at()
+    {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(String updated_at)
+    {
         this.updated_at = updated_at;
     }
 
-    public class Via {
+    public class Via
+    {
 
         private String channel;
         private Source source;
         private String vel;
 
-        private Via(String channel, Source source, String vel) {
+        private Via(String channel, Source source, String vel)
+        {
             this.channel = channel;
             this.source = source;
             this.vel = vel;
         }
 
-        private Via() {
+        private Via()
+        {
 
         }
 
-        public String getChannel() {
+        public String getChannel()
+        {
             return channel;
         }
 
-        public void setChannel(String channel) {
+        public void setChannel(String channel)
+        {
             this.channel = channel;
         }
 
-        public Source getSource() {
+        public Source getSource()
+        {
             return source;
         }
 
-        public void setSource(Source source) {
+        public void setSource(Source source)
+        {
             this.source = source;
         }
 
-        public String getVel() {
+        public String getVel()
+        {
             return vel;
         }
 
-        public void setVel(String vel) {
+        public void setVel(String vel)
+        {
             this.vel = vel;
         }
     }
 
-    public class Source {
+    public class Source
+    {
         private int to;
         private From from;
 
-        private Source(int to, From from) {
+        private Source(int to, From from)
+        {
             this.to = to;
             this.from = from;
         }
 
-        private Source() {
+        private Source()
+        {
 
         }
 
-        public int getTo() {
+        public int getTo()
+        {
             return to;
         }
 
-        public void setTo(int to) {
+        public void setTo(int to)
+        {
             this.to = to;
         }
 
-        public From getFrom() {
+        public From getFrom()
+        {
             return from;
         }
 
-        public void setFrom(From from) {
+        public void setFrom(From from)
+        {
             this.from = from;
         }
     }
 
-    public class SatisfactionRating {
+    public class SatisfactionRating
+    {
         private int id;
         private String score;
         private String comment;
 
-        private SatisfactionRating(int id, String score, String comment) {
+        private SatisfactionRating(int id, String score, String comment)
+        {
             this.id = id;
             this.score = score;
             this.comment = comment;
         }
 
-        private SatisfactionRating() {
+        private SatisfactionRating()
+        {
 
         }
 
-        public int getId() {
+        public int getId()
+        {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(int id)
+        {
             this.id = id;
         }
 
-        public String getScore() {
+        public String getScore()
+        {
             return score;
         }
 
-        public void setScore(String score) {
+        public void setScore(String score)
+        {
             this.score = score;
         }
 
-        public String getComment() {
+        public String getComment()
+        {
             return comment;
         }
 
-        public void setComment(String comment) {
+        public void setComment(String comment)
+        {
             this.comment = comment;
         }
     }
 
-    public class From {
+    public class From
+    {
 
         private int id;
         private String title;
 
-        private From(int id, String title) {
+        private From(int id, String title)
+        {
             this.id = id;
             this.title = title;
         }
 
-        private From() {
+        private From()
+        {
 
         }
 
-        public int getId() {
+        public int getId()
+        {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(int id)
+        {
             this.id = id;
         }
 
-        public String getTitle() {
+        public String getTitle()
+        {
             return title;
         }
 
-        public void setTitle(String title) {
+        public void setTitle(String title)
+        {
             this.title = title;
         }
     }

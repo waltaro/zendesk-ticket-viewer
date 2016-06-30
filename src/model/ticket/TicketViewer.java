@@ -1,12 +1,19 @@
 package model.ticket;
 
-public class TicketViewer {
+import util.data.ticket.Ticket;
 
-    public void viewAllTickets() {
+import java.util.Hashtable;
+
+public class TicketViewer
+{
+
+    public void viewAllTickets(Hashtable<Integer, Ticket> tickets)
+    {
 
     }
 
-    public void viewSingleTicket(int id) {
+    public void viewSingleTicket(Hashtable<Integer, Ticket> tickets)
+    {
 
     }
 }

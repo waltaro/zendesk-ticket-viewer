@@ -6,10 +6,12 @@ import view.Messages;
 import model.ticket.TicketViewer;
 
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class InputHandler {
+public class InputHandler
+{
 
     // Scanner used for user input;
     private Scanner input = new Scanner(System.in);
@@ -20,24 +22,29 @@ public class InputHandler {
     // Used to update the view
     private Messages message = new Messages();
 
-    public InputHandler() {
+    public InputHandler()
+    {
 
     }
 
-    public boolean isQuit() {
+    public boolean isQuit()
+    {
         return quit;
     }
 
-    public void setQuit(boolean quit) {
+    public void setQuit(boolean quit)
+    {
         this.quit = quit;
     }
 
-    private void quit() {
+    private void quit()
+    {
         message.printGoodbyeMessage();
         setQuit(true);
     }
 
-    private void setAccountDetails(Authenticator authenticator) {
+    private void setAccountDetails(Authenticator authenticator)
+    {
 
         // Requests the user to enter their username
         message.printEnterEmailAddressMessage();
@@ -46,13 +53,10 @@ public class InputHandler {
         // Requests the user to enter their password
         message.printEnterPasswordMessage();
         authenticator.setAccountPassword(input.nextLine());
-
-        // Sets the user account linked to the Zendesk subdomain
-        authenticator.setUserAccount(authenticator.getUserAccount());
-
     }
 
-    private void setDomainDetails(Authenticator authenticator) {
+    private void setDomainDetails(Authenticator authenticator)
+    {
 
         // Requests the user to enter their domain name on Zendesk
         message.printEnterSubdomainMessage();
@@ -65,9 +69,11 @@ public class InputHandler {
 
     }
 
-    public void getUserDetails(Authenticator authenticator) {
+    public void getUserDetails(Authenticator authenticator)
+    {
 
-        if(!authenticator.isConnected()) {
+        if (!authenticator.isConnected())
+        {
             // Requests the user to enter their domain name on Zendesk
             setDomainDetails(authenticator);
 
@@ -77,26 +83,30 @@ public class InputHandler {
 
     }
 
-    private void startConnectionProcess(Authenticator authenticator, TicketProcessor ticketProcessor) throws IOException {
+    private void startConnectionProcess(Authenticator authenticator, TicketProcessor ticketProcessor) throws IOException
+    {
         getUserDetails(authenticator);
         authenticator.login(ticketProcessor);
-        ticketProcessor.processData();
+        ticketProcessor.processData(authenticator);
     }
 
-    public void getMenuChoice(Authenticator authenticator, TicketProcessor ticketProcessor) throws IOException {
+    public void getMenuChoice(Authenticator authenticator, TicketProcessor ticketProcessor) throws IOException
+    {
 
         TicketViewer ticketViewer = new TicketViewer();
 
-        try{
-            switch (input.nextInt()) {
+        try
+        {
+            switch (input.nextInt())
+            {
                 case 1:
                     startConnectionProcess(authenticator, ticketProcessor);
-                    ticketViewer.viewAllTickets();
+                    ticketViewer.viewAllTickets(new Hashtable<>());
                     break;
 
                 case 2:
                     startConnectionProcess(authenticator, ticketProcessor);
-                    ticketViewer.viewSingleTicket(0);
+                    ticketViewer.viewSingleTicket(new Hashtable<>());
                     break;
 
                 case 3:
@@ -107,7 +117,9 @@ public class InputHandler {
                     message.printInputError();
                     break;
             }
-        } catch (InputMismatchException error) {
+        }
+        catch (InputMismatchException error)
+        {
             // Clear input
             input.nextLine();
             message.printInputError();

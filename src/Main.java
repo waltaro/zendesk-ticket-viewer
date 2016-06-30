@@ -3,9 +3,11 @@ import model.ticket.TicketProcessor;
 import controller.InputHandler;
 import view.Messages;
 
-public class Main {
+public class Main
+{
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception
+    {
 
         // Used to authenticate/talk to the Zendesk API for ticket retrieval
         Authenticator authenticator = new Authenticator();
@@ -20,7 +22,8 @@ public class Main {
         message.printWelcomeMessage();
 
         // Begin of menu loop
-        while(!input.isQuit()) {
+        while (!input.isQuit())
+        {
             message.printMenu();
             input.getMenuChoice(authenticator, ticketProcessor);
         }
