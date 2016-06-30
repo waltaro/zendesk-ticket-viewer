@@ -11,23 +11,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.util.*;
 
 public class TicketProcessor
 {
 
     // Used for processing
-    private InputStream dataStream;
-    private String ticketData;
-    private Hashtable<Integer, Ticket> tickets = new Hashtable<>();
+    private InputStream receivedJsonDataStream;
+    private String receivedJsonData;
+    private Hashtable<Integer, Ticket> ticketDatabase = new Hashtable<>();
+
     // Used for checking
     private boolean isDataProcessed = false;
     private Messages messages = new Messages();
 
-    public void setTicketData(String ticketData)
+    public void setReceivedJsonData(String receivedJsonData)
     {
-        this.ticketData = ticketData;
+        this.receivedJsonData = receivedJsonData;
     }
 
     private void getTicketData() throws IOException
@@ -43,7 +43,7 @@ public class TicketProcessor
             messages.printRetrievingTicketDataMessage();
 
             // Get ticket ticket stream from the Zendesk servers
-            BufferedReader ticketDataStream = new BufferedReader(new InputStreamReader(this.dataStream));
+            BufferedReader ticketDataStream = new BufferedReader(new InputStreamReader(this.receivedJsonDataStream));
 
             String input;
             StringBuilder data = new StringBuilder();
@@ -57,7 +57,7 @@ public class TicketProcessor
             // Close string buffer
             ticketDataStream.close();
 
-            setTicketData(data.toString());
+            setReceivedJsonData(data.toString());
             setDataProcessed(true);
         }
         catch(NullPointerException e)
@@ -124,11 +124,12 @@ public class TicketProcessor
             String due_at = ticketData.optString("due_at");
             ArrayList tags = getJSONArrayStringData(ticketData, "tags");
             // todo via
-            //Via via = ticketData.get("via");
+            Ticket.Via via = someFunctionThatGetsTheViaObject();
+            //Via via = receivedJsonData.get("via");
             ArrayList custom_fields = getJSONArrayStringData(ticketData, "tags");
             // todo satisfaction_rating
             ArrayList sharing_agreement_ids = getJSONArrayIntData(ticketData, "sharing_agreement_ids");
-            //Only for closed tickets
+            //Only for closed ticketDatabase
             ArrayList followup_ids = getJSONArrayIntData(ticketData, "followup_ids");
 
             int ticket_form_id = ticketData.optInt("ticket_form_id");
@@ -172,67 +173,66 @@ public class TicketProcessor
         }
         catch (JSONException e)
         {
-            // If there are no closed tickets, catch the exception for followup_ids not being found
+            // If there are no closed ticketDatabase, catch the exception for followup_ids not being found
         }
 
         return ticket;
     }
 
-
     private void saveTicketData(Authenticator authenticator)
     {
-        // Create new JSON
-        JSONObject receivedData = new JSONObject(this.ticketData);
+        // Create new JSON Object
+        JSONObject receivedData = new JSONObject(receivedJsonData);
 
-        // Retrieve all tickets
+        // Retrieve all ticketDatabase
         try
         {
-            // Get tickets from the received ticket
-            JSONArray tickets = receivedData.getJSONArray("tickets");
+            // Get ticketDatabase from the received ticket
+            JSONArray tickets = receivedData.getJSONArray("ticketDatabase");
 
             // Inform the user that we are saving the ticket data
             messages.printSavingTicketDataMessage();
 
-            // Get all tickets and store it into the hashtable
+            // Get all ticketDatabase and store it into the hashtable
             for (int i = 0; i < tickets.length(); i++)
             {
 
                 // Get the current ticket
                 JSONObject ticketData = tickets.getJSONObject(i);
 
-                this.tickets.put(ticketData.optInt("id"), getTicket(ticketData));
+                // Add the current ticket to the Hashtable
+                ticketDatabase.put(ticketData.optInt("id"), getTicket(ticketData));
             }
 
         }
         catch (JSONException e)
         {
-            // If no tickets have be founds
-            //messages.printNoTicketsFound();
+
         }
         catch (NullPointerException e)
         {
 
         }
 
-        // Checks to see if there is another page of tickets
+        // Checks to see if there is another page of ticketDatabase
         try
         {
             // Try to get the next string
             String nextPageURL = receivedData.optString("next_page");
 
-            // If there exists a next page of tickets
+            // If there exists a next page of ticketDatabase
             if(!nextPageURL.isEmpty()) {
                 // Set all checks to false so we can process data again
                 setDataProcessed(false);
 
-                // Connect to the Zendesk API to retrieve the next page of tickets
+                // Connect to the Zendesk API to retrieve the next page of ticketDatabase
                 authenticator.connect(authenticator.getUserAccount().getEncryptedAccountDetails(), nextPageURL, this);
 
                 // Process the data
                 processData(authenticator);
             }
         }
-        // If there is no next page, catch the exception
+        // If there is no next page, catch the exception and set the data processed check flag to true
         catch (JSONException e)
         {
             setDataProcessed(true);
@@ -262,9 +262,9 @@ public class TicketProcessor
         saveTicketData(authenticator);
     }
 
-    public void setDataStream(InputStream dataStream)
+    public void setReceivedJsonDataStream(InputStream receivedJsonDataStream)
     {
-        this.dataStream = dataStream;
+        this.receivedJsonDataStream = receivedJsonDataStream;
     }
 
     public void setDataProcessed(boolean dataProcessed)

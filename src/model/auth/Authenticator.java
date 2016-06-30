@@ -8,7 +8,6 @@ import view.Messages;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -101,7 +100,8 @@ public class Authenticator
             if (responseCode == 200)
             {
                 // Saves the data received from the server to the ticket processor
-                ticketProcessor.setDataStream(connection.getInputStream());
+                ticketProcessor.setReceivedJsonDataStream(connection.getInputStream());
+
                 // Set connected to true so we don't need to ask for user details again
                 setConnected(true);
                 return true;
