@@ -1,5 +1,7 @@
 package view;
 
+import util.data.ticket.Ticket;
+
 public class Messages
 {
 
@@ -73,8 +75,24 @@ public class Messages
         System.out.println("Retrieving tickets...");
     }
 
-    public void printNoTicketsFound()
+    public void printNoTicketFound(int ticketID)
     {
-        System.out.println("\nNo tickets have been found!");
+        System.out.println("\nTicket ID: "
+                + ticketID
+                + " was not found");
+    }
+
+    public void printTicket(Ticket ticket)
+    {
+        long id = ticket.getId();
+        String subject = ticket.getSubject();
+        String status = ticket.getStatus().toUpperCase();
+        long submittedBy = ticket.getSubmitter_id();
+
+        System.out.format("\n%d | %s | %s | %d\n", id, subject, status, submittedBy);
+    }
+
+    public void printEnterTicketIdMessage() {
+        System.out.print("\nPlease enter ticket ID: ");
     }
 }

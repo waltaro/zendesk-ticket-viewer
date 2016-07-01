@@ -136,16 +136,16 @@ public class TicketProcessor
         String updated_at = ticketData.optString("updated_at");
 
         // Retrieving all integer data
-        int id = ticketData.optInt("id");
-        int requester_id = ticketData.optInt("requester_id");
-        int submitter_id = ticketData.optInt("submitter_id");
-        int assignee_id = ticketData.optInt("assignee_id");
-        int organization_id = ticketData.optInt("organization_id");
-        int group_id = ticketData.optInt("group_id");
-        int forum_topic_id = ticketData.optInt("forum_topic_id");
-        int problem_id = ticketData.optInt("problem_id");
-        int ticket_form_id = ticketData.optInt("ticket_form_id");
-        int brand_id = ticketData.optInt("brand_id");
+        long id = ticketData.optLong("id");
+        long requester_id = ticketData.optLong("requester_id");
+        long submitter_id = ticketData.optLong("submitter_id");
+        long assignee_id = ticketData.optLong("assignee_id");
+        long organization_id = ticketData.optLong("organization_id");
+        long group_id = ticketData.optLong("group_id");
+        long forum_topic_id = ticketData.optLong("forum_topic_id");
+        long problem_id = ticketData.optLong("problem_id");
+        long ticket_form_id = ticketData.optLong("ticket_form_id");
+        long brand_id = ticketData.optLong("brand_id");
 
         // Retrieving all boolean data
         boolean has_incidents = ticketData.getBoolean("has_incidents");

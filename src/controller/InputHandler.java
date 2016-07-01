@@ -103,7 +103,7 @@ public class InputHandler
 
         try
         {
-            System.out.print("\nPlease enter ticket ID: ");
+            message.printEnterTicketIdMessage();
             ticketViewer.viewSingleTicket(ticketProcessor.getTicketDatabase(), input.nextInt());
         }
         catch (InputMismatchException error)
@@ -125,7 +125,7 @@ public class InputHandler
             {
                 case 1:
                     startConnectionProcess(authenticator, ticketProcessor);
-                    ticketViewer.viewAllTickets(null);
+                    ticketViewer.viewAllTickets(ticketProcessor.getTicketDatabase());
                     break;
 
                 case 2:
