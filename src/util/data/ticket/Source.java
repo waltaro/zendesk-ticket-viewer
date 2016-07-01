@@ -4,11 +4,13 @@ public class Source
 {
     private int to;
     private From from;
+    private String rel;
 
-    public Source(int to, From from)
+    public Source(int to, From from, String rel)
     {
         this.to = to;
         this.from = from;
+        this.rel = rel;
     }
 
     public Source()
@@ -34,5 +36,15 @@ public class Source
     public void setFrom(From from)
     {
         this.from = from;
+    }
+
+    public String getRel()
+    {
+        return rel;
+    }
+
+    public void setRel(String rel)
+    {
+        this.rel = rel;
     }
 }

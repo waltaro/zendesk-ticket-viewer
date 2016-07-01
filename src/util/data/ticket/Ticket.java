@@ -28,7 +28,7 @@ public class Ticket
     private ArrayList<String> tags;
     private Via via;
     private ArrayList<String> custom_fields;
-    private SatisfactionRating satisfaction_rating;
+    private String satisfaction_rating;
     private ArrayList<Integer> sharing_agreement_ids;
     private ArrayList<Integer> followup_ids;
     private int ticket_form_id;
@@ -277,12 +277,12 @@ public class Ticket
         this.custom_fields = custom_fields;
     }
 
-    public SatisfactionRating getSatisfaction_rating()
+    public String getSatisfaction_rating()
     {
         return satisfaction_rating;
     }
 
-    public void setSatisfaction_rating(SatisfactionRating satisfaction_rating)
+    public void setSatisfaction_rating(String satisfaction_rating)
     {
         this.satisfaction_rating = satisfaction_rating;
     }

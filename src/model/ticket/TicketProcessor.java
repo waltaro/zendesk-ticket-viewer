@@ -4,6 +4,8 @@ import model.auth.Authenticator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import util.data.ticket.From;
+import util.data.ticket.Source;
 import util.data.ticket.Ticket;
 import util.data.ticket.Via;
 import view.Messages;
@@ -67,9 +69,9 @@ public class TicketProcessor
         }
     }
 
-    private ArrayList getJSONArrayStringData(JSONObject data, String key)
+    private ArrayList getJSONArrayStringData(JSONObject ticketData, String key)
     {
-        JSONArray arrayData = data.getJSONArray(key);
+        JSONArray arrayData = ticketData.getJSONArray(key);
         ArrayList list = new ArrayList<>();
 
         for (int i = 0; i < arrayData.length(); i++)
@@ -80,9 +82,9 @@ public class TicketProcessor
         return list;
     }
 
-    private ArrayList getJSONArrayIntData(JSONObject data, String key)
+    private ArrayList getJSONArrayIntData(JSONObject ticketData, String key)
     {
-        JSONArray arrayData = data.getJSONArray(key);
+        JSONArray arrayData = ticketData.getJSONArray(key);
         ArrayList list = new ArrayList<>();
 
         for (int i = 0; i < arrayData.length(); i++)
@@ -93,17 +95,33 @@ public class TicketProcessor
         return list;
     }
 
-    // TODO: refactor this somehow.. it's disgusting
+    private Via getJSONViaData(JSONObject ticketData)
+    {
+        JSONObject via_data = ticketData.getJSONObject("via");
+        JSONObject via_source = via_data.getJSONObject("source");
+        JSONObject via_source_from = via_source.getJSONObject("from");
+
+        String via_channel = via_data.getString("channel");
+        int via_source_to = via_source.optInt("to");
+        int via_source_from_id = via_source_from.optInt("id");
+        String via_source_from_title = via_source_from.optString("title");
+        String via_source_rel = via_source.optString("rel");
+
+        From from = new From(via_source_from_id, via_source_from_title);
+        Source source = new Source(via_source_to, from, via_source_rel);
+
+        return new Via(via_channel, source);
+    }
+
     private Ticket getTicket(JSONObject ticketData)
     {
-
         // Create new empty ticket
         Ticket ticket = new Ticket();
 
+        // Populate empty ticket with ticket data from the server
         try
         {
-            // Populate empty ticket with ticket data from the server
-            int id = ticketData.optInt("id");
+            // Retrieving all string data
             String url = ticketData.optString("url");
             String external_id = ticketData.optString("external_id");
             String type = ticketData.optString("type");
@@ -112,33 +130,39 @@ public class TicketProcessor
             String description = ticketData.optString("description");
             String priority = ticketData.optString("priority");
             String status = ticketData.optString("status");
+            String satisfaction_rating = ticketData.optString("satisfaction_rating");
             String recipient = ticketData.optString("recipient");
+            String due_at = ticketData.optString("due_at");
+            String created_at = ticketData.optString("created_at");
+            String updated_at = ticketData.optString("updated_at");
+
+            // Retrieving all integer data
+            int id = ticketData.optInt("id");
             int requester_id = ticketData.optInt("requester_id");
             int submitter_id = ticketData.optInt("submitter_id");
             int assignee_id = ticketData.optInt("assignee_id");
             int organization_id = ticketData.optInt("organization_id");
             int group_id = ticketData.optInt("group_id");
-            ArrayList collaborator_ids = getJSONArrayIntData(ticketData, "collaborator_ids");
             int forum_topic_id = ticketData.optInt("forum_topic_id");
             int problem_id = ticketData.optInt("problem_id");
-            boolean has_incidents = ticketData.getBoolean("has_incidents");
-            String due_at = ticketData.optString("due_at");
-            ArrayList tags = getJSONArrayStringData(ticketData, "tags");
-            // todo via
-
-            ArrayList custom_fields = getJSONArrayStringData(ticketData, "tags");
-            // todo satisfaction_rating
-            ArrayList sharing_agreement_ids = getJSONArrayIntData(ticketData, "sharing_agreement_ids");
-            //Only for closed ticketDatabase
-            ArrayList followup_ids = getJSONArrayIntData(ticketData, "followup_ids");
-
             int ticket_form_id = ticketData.optInt("ticket_form_id");
             int brand_id = ticketData.optInt("brand_id");
-            boolean allow_channelback = ticketData.optBoolean("allow_channelback");
-            String created_at = ticketData.optString("created_at");
-            String updated_at = ticketData.optString("updated_at");
 
-            // Populates the ticket
+            // Retrieving all boolean data
+            boolean has_incidents = ticketData.getBoolean("has_incidents");
+            boolean allow_channelback = ticketData.optBoolean("allow_channelback");
+
+            // Retrieving all array data
+            ArrayList collaborator_ids = getJSONArrayIntData(ticketData, "collaborator_ids");
+            ArrayList tags = getJSONArrayStringData(ticketData, "tags");
+            ArrayList custom_fields = getJSONArrayStringData(ticketData, "tags");
+            ArrayList sharing_agreement_ids = getJSONArrayIntData(ticketData, "sharing_agreement_ids");
+            ArrayList followup_ids = getJSONArrayIntData(ticketData, "followup_ids");
+
+            // Retrieving the Via object
+            Via via = getJSONViaData(ticketData);
+
+            // Populates the ticket with retrieved data
             ticket.setId(id);
             ticket.setUrl(url);
             ticket.setExternal_id(external_id);
@@ -160,9 +184,9 @@ public class TicketProcessor
             ticket.setHas_incidents(has_incidents);
             ticket.setDue_at(due_at);
             ticket.setTags(tags);
-            //ticket.setVia(via);
+            ticket.setVia(via);
             ticket.setCustom_fields(custom_fields);
-            //ticket.setSatisfaction_rating(sat);
+            ticket.setSatisfaction_rating(satisfaction_rating);
             ticket.setSharing_agreement_ids(sharing_agreement_ids);
             ticket.setFollowup_ids(followup_ids);
             ticket.setTicket_form_id(ticket_form_id);
@@ -176,6 +200,7 @@ public class TicketProcessor
             // If there are no closed tickets, catch the exception for followup_ids not being found
         }
 
+        // Return the populated ticket
         return ticket;
     }
 
