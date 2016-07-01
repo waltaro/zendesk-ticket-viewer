@@ -77,9 +77,13 @@ public class Messages
 
     public void printNoTicketFound(int ticketID)
     {
-        System.out.println("\nTicket ID: "
-                + ticketID
-                + " was not found");
+        System.out.println("\nTicket ID " + ticketID + " was not found");
+    }
+
+    public void printTicketTableHeader()
+    {
+        System.out.format("\n%-4s| %-50s | %-4s | %s", "ID", "Title", "Status", "Submitted By");
+        System.out.println("\n--------------------------------------------------------------------------------");
     }
 
     public void printTicket(Ticket ticket)
@@ -89,7 +93,7 @@ public class Messages
         String status = ticket.getStatus().toUpperCase();
         long submittedBy = ticket.getSubmitter_id();
 
-        System.out.format("\n%d | %s | %s | %d\n", id, subject, status, submittedBy);
+        System.out.format("%-4d| %-50s |  %-5s | %d\n", id, subject, status, submittedBy);
     }
 
     public void printEnterTicketIdMessage() {

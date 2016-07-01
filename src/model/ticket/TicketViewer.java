@@ -11,6 +11,8 @@ public class TicketViewer
 
     public void viewAllTickets(Hashtable<Integer, Ticket> tickets)
     {
+        message.printTicketTableHeader();
+
         for(int ticketID : tickets.keySet())
         {
             message.printTicket(tickets.get(ticketID));
@@ -21,6 +23,7 @@ public class TicketViewer
     {
         try
         {
+            message.printTicketTableHeader();
             message.printTicket(tickets.get(id));
         }
         catch (NullPointerException e)
