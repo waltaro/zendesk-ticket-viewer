@@ -96,6 +96,24 @@ public class InputHandler
         }
     }
 
+    // ask user for ticket id, then call ticketviewer to access data to view id.
+    private void getTicketID(TicketProcessor ticketProcessor) {
+
+        TicketViewer ticketViewer = new TicketViewer();
+
+        try
+        {
+            System.out.print("\nPlease enter ticket ID: ");
+            ticketViewer.viewSingleTicket(ticketProcessor.getTicketDatabase(), input.nextInt());
+        }
+        catch (InputMismatchException error)
+        {
+            input.nextLine();
+            message.printInputError();
+        }
+
+    }
+
     public void getMenuChoice(Authenticator authenticator, TicketProcessor ticketProcessor) throws IOException
     {
 
@@ -107,12 +125,12 @@ public class InputHandler
             {
                 case 1:
                     startConnectionProcess(authenticator, ticketProcessor);
-                    ticketViewer.viewAllTickets(new Hashtable<>());
+                    ticketViewer.viewAllTickets(null);
                     break;
 
                 case 2:
                     startConnectionProcess(authenticator, ticketProcessor);
-                    ticketViewer.viewSingleTicket(new Hashtable<>());
+                    getTicketID(ticketProcessor);
                     break;
 
                 case 3:

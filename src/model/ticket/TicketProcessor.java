@@ -35,7 +35,7 @@ public class TicketProcessor
 
     private void getTicketData() throws IOException
     {
-        if(isDataProcessed)
+        if (isDataProcessed)
         {
             return;
         }
@@ -63,7 +63,7 @@ public class TicketProcessor
             setReceivedJsonData(data.toString());
             setDataProcessed(true);
         }
-        catch(NullPointerException e)
+        catch (NullPointerException e)
         {
 
         }
@@ -119,86 +119,86 @@ public class TicketProcessor
         Ticket ticket = new Ticket();
 
         // Populate empty ticket with ticket data from the server
-        try
+
+        // Retrieving all string data
+        String url = ticketData.optString("url");
+        String external_id = ticketData.optString("external_id");
+        String type = ticketData.optString("type");
+        String subject = ticketData.optString("subject");
+        String raw_subject = ticketData.optString("raw_subject");
+        String description = ticketData.optString("description");
+        String priority = ticketData.optString("priority");
+        String status = ticketData.optString("status");
+        String satisfaction_rating = ticketData.optString("satisfaction_rating");
+        String recipient = ticketData.optString("recipient");
+        String due_at = ticketData.optString("due_at");
+        String created_at = ticketData.optString("created_at");
+        String updated_at = ticketData.optString("updated_at");
+
+        // Retrieving all integer data
+        int id = ticketData.optInt("id");
+        int requester_id = ticketData.optInt("requester_id");
+        int submitter_id = ticketData.optInt("submitter_id");
+        int assignee_id = ticketData.optInt("assignee_id");
+        int organization_id = ticketData.optInt("organization_id");
+        int group_id = ticketData.optInt("group_id");
+        int forum_topic_id = ticketData.optInt("forum_topic_id");
+        int problem_id = ticketData.optInt("problem_id");
+        int ticket_form_id = ticketData.optInt("ticket_form_id");
+        int brand_id = ticketData.optInt("brand_id");
+
+        // Retrieving all boolean data
+        boolean has_incidents = ticketData.getBoolean("has_incidents");
+        boolean allow_channelback = ticketData.optBoolean("allow_channelback");
+
+        // Retrieving all array data
+        ArrayList collaborator_ids = getJSONArrayIntData(ticketData, "collaborator_ids");
+        ArrayList tags = getJSONArrayStringData(ticketData, "tags");
+        ArrayList custom_fields = getJSONArrayStringData(ticketData, "tags");
+        ArrayList sharing_agreement_ids = getJSONArrayIntData(ticketData, "sharing_agreement_ids");
+        ArrayList followup_ids = new ArrayList<>();
+
+        // If the ticket is closed, retrieve the followup ids
+        if(status.equalsIgnoreCase("closed"))
         {
-            // Retrieving all string data
-            String url = ticketData.optString("url");
-            String external_id = ticketData.optString("external_id");
-            String type = ticketData.optString("type");
-            String subject = ticketData.optString("subject");
-            String raw_subject = ticketData.optString("raw_subject");
-            String description = ticketData.optString("description");
-            String priority = ticketData.optString("priority");
-            String status = ticketData.optString("status");
-            String satisfaction_rating = ticketData.optString("satisfaction_rating");
-            String recipient = ticketData.optString("recipient");
-            String due_at = ticketData.optString("due_at");
-            String created_at = ticketData.optString("created_at");
-            String updated_at = ticketData.optString("updated_at");
-
-            // Retrieving all integer data
-            int id = ticketData.optInt("id");
-            int requester_id = ticketData.optInt("requester_id");
-            int submitter_id = ticketData.optInt("submitter_id");
-            int assignee_id = ticketData.optInt("assignee_id");
-            int organization_id = ticketData.optInt("organization_id");
-            int group_id = ticketData.optInt("group_id");
-            int forum_topic_id = ticketData.optInt("forum_topic_id");
-            int problem_id = ticketData.optInt("problem_id");
-            int ticket_form_id = ticketData.optInt("ticket_form_id");
-            int brand_id = ticketData.optInt("brand_id");
-
-            // Retrieving all boolean data
-            boolean has_incidents = ticketData.getBoolean("has_incidents");
-            boolean allow_channelback = ticketData.optBoolean("allow_channelback");
-
-            // Retrieving all array data
-            ArrayList collaborator_ids = getJSONArrayIntData(ticketData, "collaborator_ids");
-            ArrayList tags = getJSONArrayStringData(ticketData, "tags");
-            ArrayList custom_fields = getJSONArrayStringData(ticketData, "tags");
-            ArrayList sharing_agreement_ids = getJSONArrayIntData(ticketData, "sharing_agreement_ids");
-            ArrayList followup_ids = getJSONArrayIntData(ticketData, "followup_ids");
-
-            // Retrieving the Via object
-            Via via = getJSONViaData(ticketData);
-
-            // Populates the ticket with retrieved data
-            ticket.setId(id);
-            ticket.setUrl(url);
-            ticket.setExternal_id(external_id);
-            ticket.setType(ticketData.optString(type));
-            ticket.setSubject(subject);
-            ticket.setRaw_subject(raw_subject);
-            ticket.setDescription(description);
-            ticket.setPriority(priority);
-            ticket.setStatus(status);
-            ticket.setRecipient(recipient);
-            ticket.setRequester_id(requester_id);
-            ticket.setSubmitter_id(submitter_id);
-            ticket.setAssignee_id(assignee_id);
-            ticket.setOrganization_id(organization_id);
-            ticket.setGroup_id(group_id);
-            ticket.setCollaborator_id(collaborator_ids);
-            ticket.setForum_topic_id(forum_topic_id);
-            ticket.setProblem_id(problem_id);
-            ticket.setHas_incidents(has_incidents);
-            ticket.setDue_at(due_at);
-            ticket.setTags(tags);
-            ticket.setVia(via);
-            ticket.setCustom_fields(custom_fields);
-            ticket.setSatisfaction_rating(satisfaction_rating);
-            ticket.setSharing_agreement_ids(sharing_agreement_ids);
-            ticket.setFollowup_ids(followup_ids);
-            ticket.setTicket_form_id(ticket_form_id);
-            ticket.setBrand_id(brand_id);
-            ticket.setAllow_channelback(allow_channelback);
-            ticket.setCreated_at(created_at);
-            ticket.setUpdated_at(updated_at);
+            followup_ids = getJSONArrayIntData(ticketData, "followup_ids");
         }
-        catch (JSONException e)
-        {
-            // If there are no closed tickets, catch the exception for followup_ids not being found
-        }
+
+        // Retrieving the Via object
+        Via via = getJSONViaData(ticketData);
+
+        // Populates the ticket with retrieved data
+        ticket.setId(id);
+        ticket.setUrl(url);
+        ticket.setExternal_id(external_id);
+        ticket.setType(ticketData.optString(type));
+        ticket.setSubject(subject);
+        ticket.setRaw_subject(raw_subject);
+        ticket.setDescription(description);
+        ticket.setPriority(priority);
+        ticket.setStatus(status);
+        ticket.setRecipient(recipient);
+        ticket.setRequester_id(requester_id);
+        ticket.setSubmitter_id(submitter_id);
+        ticket.setAssignee_id(assignee_id);
+        ticket.setOrganization_id(organization_id);
+        ticket.setGroup_id(group_id);
+        ticket.setCollaborator_id(collaborator_ids);
+        ticket.setForum_topic_id(forum_topic_id);
+        ticket.setProblem_id(problem_id);
+        ticket.setHas_incidents(has_incidents);
+        ticket.setDue_at(due_at);
+        ticket.setTags(tags);
+        ticket.setVia(via);
+        ticket.setCustom_fields(custom_fields);
+        ticket.setSatisfaction_rating(satisfaction_rating);
+        ticket.setSharing_agreement_ids(sharing_agreement_ids);
+        ticket.setFollowup_ids(followup_ids);
+        ticket.setTicket_form_id(ticket_form_id);
+        ticket.setBrand_id(brand_id);
+        ticket.setAllow_channelback(allow_channelback);
+        ticket.setCreated_at(created_at);
+        ticket.setUpdated_at(updated_at);
 
         // Return the populated ticket
         return ticket;
@@ -224,10 +224,11 @@ public class TicketProcessor
 
                 // Get the current ticket
                 JSONObject ticketData = tickets.getJSONObject(i);
+                int id = ticketData.optInt("id");
+                Ticket fuck = getTicket(ticketData);
 
                 // Add the current ticket to the Hashtable
-                ticketDatabase.put(ticketData.optInt("id"), getTicket(ticketData));
-
+                this.ticketDatabase.put(id, fuck);
             }
 
         }
@@ -237,7 +238,7 @@ public class TicketProcessor
         }
         catch (NullPointerException e)
         {
-
+            System.out.println(e);
         }
 
         // Checks to see if there is another page of ticketDatabase
@@ -247,7 +248,8 @@ public class TicketProcessor
             String nextPageURL = receivedData.optString("next_page");
 
             // If there exists a next page of ticketDatabase
-            if(!nextPageURL.isEmpty()) {
+            if (!nextPageURL.isEmpty())
+            {
                 // Set all checks to false so we can process data again
                 setDataProcessed(false);
 
@@ -265,7 +267,7 @@ public class TicketProcessor
         }
         catch (NullPointerException e)
         {
-
+            System.out.println(e);
         }
         catch (IOException e)
         {
@@ -296,5 +298,10 @@ public class TicketProcessor
     public void setDataProcessed(boolean dataProcessed)
     {
         isDataProcessed = dataProcessed;
+    }
+
+    public Hashtable<Integer, Ticket> getTicketDatabase()
+    {
+        return ticketDatabase;
     }
 }

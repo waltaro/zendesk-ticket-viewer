@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Ticket
 {
-
     private int id;
     private String url;
     private String external_id;
@@ -36,16 +35,6 @@ public class Ticket
     private boolean allow_channelback;
     private String created_at;
     private String updated_at;
-
-    public Ticket(int requester_id)
-    {
-        this.requester_id = requester_id;
-    }
-
-    public Ticket()
-    {
-
-    }
 
     public int getId()
     {
@@ -292,7 +281,7 @@ public class Ticket
         return sharing_agreement_ids;
     }
 
-    public void setSharing_agreement_ids(ArrayList sharing_agreement_ids)
+    public void setSharing_agreement_ids(ArrayList<Integer> sharing_agreement_ids)
     {
         this.sharing_agreement_ids = sharing_agreement_ids;
     }

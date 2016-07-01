@@ -12,8 +12,16 @@ public class TicketViewer
 
     }
 
-    public void viewSingleTicket(Hashtable<Integer, Ticket> tickets)
+    public void viewSingleTicket(Hashtable<Integer, Ticket> tickets, int id)
     {
+        try
+        {
+            System.out.println(tickets.get(id).getId());
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("ID: " + id + "not found.");
+        }
 
     }
 }
