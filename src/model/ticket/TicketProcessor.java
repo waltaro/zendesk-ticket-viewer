@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import util.data.ticket.Ticket;
+import util.data.ticket.Via;
 import view.Messages;
 
 import java.io.BufferedReader;
@@ -124,8 +125,7 @@ public class TicketProcessor
             String due_at = ticketData.optString("due_at");
             ArrayList tags = getJSONArrayStringData(ticketData, "tags");
             // todo via
-            Ticket.Via via = someFunctionThatGetsTheViaObject();
-            //Via via = receivedJsonData.get("via");
+
             ArrayList custom_fields = getJSONArrayStringData(ticketData, "tags");
             // todo satisfaction_rating
             ArrayList sharing_agreement_ids = getJSONArrayIntData(ticketData, "sharing_agreement_ids");
@@ -173,7 +173,7 @@ public class TicketProcessor
         }
         catch (JSONException e)
         {
-            // If there are no closed ticketDatabase, catch the exception for followup_ids not being found
+            // If there are no closed tickets, catch the exception for followup_ids not being found
         }
 
         return ticket;
@@ -188,7 +188,7 @@ public class TicketProcessor
         try
         {
             // Get ticketDatabase from the received ticket
-            JSONArray tickets = receivedData.getJSONArray("ticketDatabase");
+            JSONArray tickets = receivedData.getJSONArray("tickets");
 
             // Inform the user that we are saving the ticket data
             messages.printSavingTicketDataMessage();
@@ -202,6 +202,7 @@ public class TicketProcessor
 
                 // Add the current ticket to the Hashtable
                 ticketDatabase.put(ticketData.optInt("id"), getTicket(ticketData));
+
             }
 
         }
