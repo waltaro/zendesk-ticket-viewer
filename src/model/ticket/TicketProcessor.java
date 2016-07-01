@@ -238,7 +238,7 @@ public class TicketProcessor
         }
         catch (NullPointerException e)
         {
-            System.out.println(e);
+
         }
 
         // Checks to see if there is another page of ticketDatabase
@@ -267,7 +267,7 @@ public class TicketProcessor
         }
         catch (NullPointerException e)
         {
-            System.out.println(e);
+
         }
         catch (IOException e)
         {
