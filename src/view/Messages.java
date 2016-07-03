@@ -28,9 +28,19 @@ public class Messages
         System.out.print("Input: ");
     }
 
+    public void printTicketPageMenu(int pageNumber)
+    {
+        System.out.println("\nYou are on page: " + pageNumber);
+        System.out.println("Please select from the following choices below: \n");
+        System.out.println("\t1 - Next page");
+        System.out.println("\t2 - Previous page");
+        System.out.println("\t3 - Return to menu\n");
+        System.out.print("Input: ");
+    }
+
     public void printInputError()
     {
-        System.out.println("Your input was not recognised.");
+        System.out.println("Error: your input was not recognised.");
     }
 
     public void printEnterEmailAddressMessage()
@@ -56,7 +66,7 @@ public class Messages
 
     public boolean printConnectError()
     {
-        System.out.println("\nThe API is down or your user details were incorrect");
+        System.out.println("\nError: the API is down or your user details were incorrect");
         return false;
     }
 
@@ -77,7 +87,7 @@ public class Messages
 
     public void printNoTicketFound(int ticketID)
     {
-        System.out.println("\nTicket ID " + ticketID + " was not found");
+        System.out.println("\nError: Ticket ID " + ticketID + " was not found");
     }
 
     public void printTicketTableHeader()
@@ -98,5 +108,9 @@ public class Messages
 
     public void printEnterTicketIdMessage() {
         System.out.print("\nPlease enter ticket ID: ");
+    }
+
+    public void printTicketPageNonExistentError() {
+        System.out.println("Error: you cannot return to a previous page");
     }
 }
