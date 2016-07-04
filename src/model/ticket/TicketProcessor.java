@@ -69,10 +69,10 @@ public class TicketProcessor
         }
     }
 
-    private ArrayList getJSONArrayStringData(JSONObject ticketData, String key)
+    private ArrayList<String> getJSONArrayStringData(JSONObject ticketData, String key)
     {
         JSONArray arrayData = ticketData.getJSONArray(key);
-        ArrayList list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
 
         for (int i = 0; i < arrayData.length(); i++)
         {
@@ -82,10 +82,10 @@ public class TicketProcessor
         return list;
     }
 
-    private ArrayList getJSONArrayIntData(JSONObject ticketData, String key)
+    private ArrayList<Integer> getJSONArrayIntData(JSONObject ticketData, String key)
     {
         JSONArray arrayData = ticketData.getJSONArray(key);
-        ArrayList list = new ArrayList<>();
+        ArrayList<Integer> list = new ArrayList<>();
 
         for (int i = 0; i < arrayData.length(); i++)
         {
@@ -152,11 +152,11 @@ public class TicketProcessor
         boolean allow_channelback = ticketData.optBoolean("allow_channelback");
 
         // Retrieving all array data
-        ArrayList collaborator_ids = getJSONArrayIntData(ticketData, "collaborator_ids");
-        ArrayList tags = getJSONArrayStringData(ticketData, "tags");
-        ArrayList custom_fields = getJSONArrayStringData(ticketData, "tags");
-        ArrayList sharing_agreement_ids = getJSONArrayIntData(ticketData, "sharing_agreement_ids");
-        ArrayList followup_ids = new ArrayList<>();
+        ArrayList<Integer> collaborator_ids = getJSONArrayIntData(ticketData, "collaborator_ids");
+        ArrayList<String> tags = getJSONArrayStringData(ticketData, "tags");
+        ArrayList<String> custom_fields = getJSONArrayStringData(ticketData, "tags");
+        ArrayList<Integer> sharing_agreement_ids = getJSONArrayIntData(ticketData, "sharing_agreement_ids");
+        ArrayList<Integer> followup_ids = new ArrayList<>();
 
         // If the ticket is closed, retrieve the followup ids
         if(status.equalsIgnoreCase("closed"))
