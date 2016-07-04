@@ -1,9 +1,8 @@
 package model.auth;
 
+import model.ticket.TicketProcessor;
 import util.data.user.Account;
 import util.data.user.Subdomain;
-
-import model.ticket.TicketProcessor;
 import view.Messages;
 
 import javax.net.ssl.HttpsURLConnection;

@@ -1,6 +1,6 @@
+import controller.InputHandler;
 import model.auth.Authenticator;
 import model.ticket.TicketProcessor;
-import controller.InputHandler;
 import view.Messages;
 
 public class Main

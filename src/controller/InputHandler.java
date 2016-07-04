@@ -2,11 +2,10 @@ package controller;
 
 import model.auth.Authenticator;
 import model.ticket.TicketProcessor;
-import view.Messages;
 import model.ticket.TicketViewer;
+import view.Messages;
 
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -89,7 +88,7 @@ public class InputHandler
         getUserDetails(authenticator);
 
         // If login was successful, process the data received
-        if(authenticator.login(ticketProcessor))
+        if (authenticator.login(ticketProcessor))
         {
             // Process data received
             ticketProcessor.processData(authenticator);
@@ -97,7 +96,8 @@ public class InputHandler
     }
 
     // ask user for ticket id, then call ticketviewer to access data to view id.
-    private void getTicketID(TicketProcessor ticketProcessor) {
+    private void getTicketID(TicketProcessor ticketProcessor)
+    {
 
         TicketViewer ticketViewer = new TicketViewer();
 

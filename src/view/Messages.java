@@ -106,11 +106,13 @@ public class Messages
         System.out.format("%-4d| %-50s |  %-5s | %d\n", id, subject, status, submittedBy);
     }
 
-    public void printEnterTicketIdMessage() {
+    public void printEnterTicketIdMessage()
+    {
         System.out.print("\nPlease enter ticket ID: ");
     }
 
-    public void printTicketPageNonExistentError() {
+    public void printTicketPageNonExistentError()
+    {
         System.out.println("Error: you cannot return to a previous page");
     }
 }

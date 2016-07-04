@@ -14,7 +14,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class TicketProcessor
 {
@@ -159,7 +160,7 @@ public class TicketProcessor
         ArrayList<Integer> followup_ids = new ArrayList<>();
 
         // If the ticket is closed, retrieve the followup ids
-        if(status.equalsIgnoreCase("closed"))
+        if (status.equalsIgnoreCase("closed"))
         {
             followup_ids = getJSONArrayIntData(ticketData, "followup_ids");
         }
