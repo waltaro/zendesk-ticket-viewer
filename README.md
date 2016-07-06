@@ -4,6 +4,7 @@ A command line interface ticket viewer for the Zendesk 2016 internship coding ch
 ## Prerequisites
 - [Java 8](https://java.com/en/download/)
 - [JSON In Java (org.json library)](http://central.maven.org/maven2/org/json/json/20160212/json-20160212.jar)
+- [JUnit 4](http://junit.org/junit4/)
 
 ## Installation
 1. Clone the git repository into a working directory of your choice.
